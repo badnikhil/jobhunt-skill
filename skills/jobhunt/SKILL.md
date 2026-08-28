@@ -338,6 +338,9 @@ want to watch live.
   `qualification.location.action` (living_in / relocate_to) plus a **react-select** city picker whose placeholder
   div intercepts clicks — click the radio's `<label>`, `focus()` the input via JS, type the city, click
   `.select__option`. The textarea and submit stay disabled until both are set.
+  The radios are custom-styled and **visually hidden**: Selenium `is_displayed()` is False, so any
+  displayed-filter drops them silently. Query without the filter and click `r.closest('label')` via JS. Scope
+  these lookups to the document — the submit button's nearest container excludes the qualification block.
 - "Rate limit" appearing in a job description is not a throttle. Match real throttle phrasing only
   (`you've reached … limit`, `too many requests`, HTTP 429), and only in the top of the page.
 - "no longer accepting" = closed; record it as terminal so re-runs skip it.
