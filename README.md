@@ -41,7 +41,8 @@ ligatures have no Unicode mapping, so "profiling" extracts as `proling` and "off
 as `oine-rst`. Every keyword match scores zero and nothing looks wrong. Check with:
 
 ```bash
-./scripts/check_ats_safe.sh resume.pdf
+pdftotext resume.pdf - | grep -oE '\b(oine|proling|specic|ows|rst)\b'
+# any output at all means it is broken
 ```
 
 **2. Rank on skill fit, never on pay.** Ranking by stipend meant applying to "Student
@@ -51,15 +52,6 @@ rating scored every one of them *Weak*.
 **3. Referrals beat volume.** Anyone who has merged your pull requests already has evidence
 of your ability. Finding out where they work takes minutes and is worth more than a hundred
 cold applications.
-
-## Scripts
-
-| Script | Purpose |
-|---|---|
-| `scripts/fetch_ats.py` | Pull openings from Greenhouse / Lever / Ashby public APIs |
-| `scripts/fetch_workday.py` | Query Workday's public CXS API (most large enterprises) |
-| `scripts/browser.py` | Selenium + Firefox helper, incl. snap binary path handling |
-| `scripts/check_ats_safe.sh` | Verify a resume PDF survives ATS text extraction |
 
 ## Ethics, briefly
 
