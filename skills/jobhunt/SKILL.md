@@ -348,6 +348,25 @@ want to watch live.
   lets "Product Management Intern" through.
 - Pace: 15–35 s between applications; ~40 per batch with per-job ledger writes went through without any throttle.
 
+### Direct ATS forms (Greenhouse / Ashby / Lever) — where the good companies are
+
+- Source real-company roles from the public ATS APIs (`boards-api.greenhouse.io`, `api.lever.co`,
+  `api.ashbyhq.com`) and curated GitHub lists (speedyapply `2026-SWE-College-Jobs` INTERN_INTL / NEW_GRAD_INTL
+  carry India rows; parse the *apply* link column, not the company homepage). `\bintern\b`, not `intern` —
+  otherwise "Internal Audit" floods the results.
+- **Greenhouse and Ashby use invisible reCAPTCHA and go through from a headless browser; Lever shows a visible
+  challenge and does not** — Lever goes on the manual list with pre-written answers.
+- Greenhouse: country/location/school/degree are react-select flyouts — match options with `startswith`
+  ("India" must not pick "British Indian Ocean Territory"); own-site embeds (kaseya.com) use native `<select>`s
+  and **ignore synthetic clicks** — use a real ActionChains click and poll ~25 s. Refuse to submit when a
+  required question is unmapped. Never let a first-option fallback answer an honesty question (relocation,
+  authorization) — map them explicitly and truthfully.
+- Ashby: `_systemfield_*` inputs; resume autofill pre-types Location as plain text that fails validation — clear
+  and re-select from `div[role=option]`; blur the dropdown before Submit or the click is swallowed; yes/no
+  button groups and radios are answered by question text (SMS consent sits under the "Phone number" question).
+- Verify with the ATS receipt email (`no-reply@us.greenhouse-mail.io`, `no-reply@ashbyhq.com`) — never by
+  re-submitting; a silent form can already have gone through.
+
 ## 5.5 The manual-apply list — for everything automation shouldn't touch
 
 Not every application should be automated, and some must not be. Rather than skipping those,
