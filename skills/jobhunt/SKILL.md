@@ -327,6 +327,24 @@ want to watch live.
 
 ---
 
+### Platform gotcha: Wellfound (on-platform apply)
+
+- Login is Google/magic-link → do it in the user's normal browser, then copy cookies (+ the `-wal` file) into
+  the automation profile **while holding the profile lock**, or a browser that's mid-run writes stale cookies back.
+- Listing page: `button` "Apply"/"Apply now" opens a modal; custom questions are
+  `textarea[name^='customQuestionAnswers']`; submit is `[data-test='JobApplicationModal--SubmitButton']`.
+  Ground truth for success: reload the listing and look for a `button` reading "Applied".
+- Location qualification ("This job does not support the locations on your profile"): radios
+  `qualification.location.action` (living_in / relocate_to) plus a **react-select** city picker whose placeholder
+  div intercepts clicks — click the radio's `<label>`, `focus()` the input via JS, type the city, click
+  `.select__option`. The textarea and submit stay disabled until both are set.
+- "Rate limit" appearing in a job description is not a throttle. Match real throttle phrasing only
+  (`you've reached … limit`, `too many requests`, HTTP 429), and only in the top of the page.
+- "no longer accepting" = closed; record it as terminal so re-runs skip it.
+- Title filters must catch `product management`, `GTM`, `growth`, `founder's office` — "product manager" alone
+  lets "Product Management Intern" through.
+- Pace: 15–35 s between applications; ~40 per batch with per-job ledger writes went through without any throttle.
+
 ## 5.5 The manual-apply list — for everything automation shouldn't touch
 
 Not every application should be automated, and some must not be. Rather than skipping those,
