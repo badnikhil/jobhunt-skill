@@ -310,7 +310,19 @@ want to watch live.
   Verify state through the DOM (`input.checked`), never by guessing from class names like `active`.
 - Success = URL contains `register/success?rstatus=1`. `register/success?source=external` is an external
   redirect, not a submission — put those on the manual list with the real destination URL.
-- When a form keeps failing, **dump the widget's actual DOM** before iterating on selectors. Three blind
+- When a form keeps failing, **dump the widget's actual DOM** before iterating on selectors.
+- Unstop keeps a **per-opportunity form draft**: a buggy run's drift persists in that listing's draft even
+  when the profile is fine. Restore profile-derived fields before every submit.
+- Specialization is Angular Material: click the `mat-select` (not the `mat-form-field` wrapper); options live in
+  `.cdk-overlay-pane mat-option`, which is `position:fixed` — `offsetParent` checks see nothing, use Selenium
+  `is_displayed()`; fallback to mat-select typeahead via `send_keys`.
+- Chip radios are `<div class="un-radio"><input><label class="un-label">` with no `for`: click the **input** and
+  verify `.checked`. A **disabled** graduation-year input means the listing is final-year-only → mark ineligible.
+- Eligibility is signalled three ways, all terminal: a modal ("You are not eligible … Domain"), a location
+  gate ("Since you're not located in <city>, you can't apply"), and disabled year chips. Never click
+  "Update profile" to force eligibility.
+- "Expected Compensation (in LPA)" is numeric (≤100). Answer with a number; text fails validation silently.
+ Three blind
   retries cost more than one inspection.
 
 ---
