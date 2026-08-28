@@ -297,6 +297,24 @@ want to watch live.
 
 ---
 
+### Platform gotcha: Unstop native forms (Angular)
+
+- Profile-prefilled dropdowns (Domain / Course / Course Specialization) must **never** be touched. A generic
+  `div[class*=select]` selector also matches *empty inner wrappers* of those dropdowns; clicking one opens it,
+  a "pick the first option" fallback selects the alphabetically-first value (Acoustics Engineering, MBA, HRM…),
+  and Angular then resets Graduating Year → the form fails with "Please select year of graduation".
+- Scope screening-question dropdowns to elements **after** the "Screening Questions" heading in DOM order:
+  `//*[text()='Screening Questions']/following::*[...]`. An `ancestor::*[contains(.,'Screening Questions')]`
+  guard is useless — it matches the whole form container.
+- After any dropdown work, re-assert the chips (Graduating Year is `label.un-label` with class `label-checked`).
+  Verify state through the DOM (`input.checked`), never by guessing from class names like `active`.
+- Success = URL contains `register/success?rstatus=1`. `register/success?source=external` is an external
+  redirect, not a submission — put those on the manual list with the real destination URL.
+- When a form keeps failing, **dump the widget's actual DOM** before iterating on selectors. Three blind
+  retries cost more than one inspection.
+
+---
+
 ## 5.5 The manual-apply list — for everything automation shouldn't touch
 
 Not every application should be automated, and some must not be. Rather than skipping those,
