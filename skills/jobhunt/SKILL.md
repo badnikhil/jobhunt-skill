@@ -297,6 +297,59 @@ want to watch live.
 
 ---
 
+## 5.5 The manual-apply list — for everything automation shouldn't touch
+
+Not every application should be automated, and some must not be. Rather than skipping those,
+**hand the candidate a ready-to-click list** so the work still gets done — by them, in thirty
+seconds each, with zero account risk.
+
+### When a role belongs on the manual list
+
+- **The platform prohibits automation** (LinkedIn is the big one — their ToS bans bots and
+  they do restrict accounts). Scrape listings read-only, then hand over the links.
+- **The application needs judgement** — essay questions, "why this company", portfolio picks.
+- **High-value roles** where a careless auto-fill would waste a rare opportunity.
+- **OAuth or CAPTCHA walls.** Google refuses OAuth from WebDriver-controlled browsers outright
+  ("This browser or app may not be secure"), so anything behind Google sign-in is manual.
+- **Anything the candidate said to leave alone.**
+
+### The format that actually gets used
+
+A single `MANUAL-APPLY.md`, one row per role, with **the exact resume file named** — so there
+is no thinking required, just click and attach:
+
+```markdown
+| # | Company | Role / why it fits | Location | Resume to attach | Link |
+|---|---------|--------------------|----------|------------------|------|
+| 1 | Acme    | Compiler Engineer — matches your LLVM PRs | Pune | `resumes/resume-systems.pdf` | [apply](url) |
+```
+
+Include, above the table, a small index of every resume variant and what it's for. The whole
+point is that the candidate opens the file and starts clicking without having to decide anything.
+
+### Rules for the list
+
+- **Name the specific resume file per row.** "Use the systems one" is friction; a path is not.
+- **Say why each role fits** in a few words. It tells them where to spend effort when the
+  list is long, and it becomes the first line of their cover note.
+- **Sort by expected value, not by source.** The one role where they're a rare fit belongs
+  above fifty where they're one of a thousand.
+- **Include a dead-ends section.** Companies that are bankrupt, acquired, domain-hijacked,
+  visa-gated, or whose "careers" address is actually an anti-fraud inbox. Saving them from
+  wasted applications is as valuable as finding good ones — and stops them rediscovering
+  the same dead ends next week.
+- **Note eligibility traps explicitly.** Graduation-year gates, "final year only",
+  citizenship requirements, lifetime bars from other programmes.
+- Keep it in the same folder as the resumes so paths resolve.
+
+### Tell them plainly which is which
+
+When reporting, separate "I applied to N" from "here are M for you to click". Conflating the
+two overstates what's been done. And be honest about relative value: a manual application to
+a company where their background is rare will usually beat a hundred automated ones.
+
+---
+
 ## 6. Cold outreach — high value, easy to get wrong
 
 Direct email to a real hiring address beats an ATS submission, because a human reads it.
