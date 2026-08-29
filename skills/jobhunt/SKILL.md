@@ -364,6 +364,12 @@ want to watch live.
 - Ashby: `_systemfield_*` inputs; resume autofill pre-types Location as plain text that fails validation — clear
   and re-select from `div[role=option]`; blur the dropdown before Submit or the click is swallowed; yes/no
   button groups and radios are answered by question text (SMS consent sits under the "Phone number" question).
+- Own-site wrappers (Careerpuck, tower-research.com, kaseya.com) sit on Greenhouse: when `job-boards.greenhouse.io/<board>/jobs/<id>`
+  403s or renders nothing, `boards.greenhouse.io/embed/job_app?for=<board>&token=<id>` usually serves the plain form.
+  The wizard's `gh_jid`/job id and `boards-api.greenhouse.io/v1/boards/<slug>/jobs/<id>` (200 = right slug) tell you both.
+- Quality over volume, and internships only for a student: gate the pipeline on intern/campus titles and turn
+  senior or off-profile titles into "ask the candidate" rows — one wrong full-time application at a company they
+  care about costs more than fifty skipped junk ones.
 - Verify with the ATS receipt email (`no-reply@us.greenhouse-mail.io`, `no-reply@ashbyhq.com`) — never by
   re-submitting; a silent form can already have gone through.
 
