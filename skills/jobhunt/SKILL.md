@@ -367,6 +367,24 @@ want to watch live.
 - Verify with the ATS receipt email (`no-reply@us.greenhouse-mail.io`, `no-reply@ashbyhq.com`) — never by
   re-submitting; a silent form can already have gone through.
 
+### Platform gotcha: Workday (big-company portals)
+
+- Flow: `/apply` → "Apply Manually" → Create Account (per tenant; store the generated password locally) →
+  My Information → My Experience → Application Questions → Voluntary Disclosures → Review. Drafts persist on
+  the account, so a re-run resumes where it left off — and re-adds entries unless you delete existing ones first.
+- Inputs are keyed by **`id`** (`name--legalName--firstName`, `address--city`, `phoneNumber--phoneNumber`,
+  `source--source`), not `data-automation-id`. `is_displayed()` is unreliable — test `offsetParent` and rect.
+  Every interaction re-renders: re-find elements per action.
+- Prompts ("How did you hear about us", field of study, skills): click the field, type into the popup's own
+  `#searchBox`, ArrowDown, Enter, then **Tab**. Escape cancels the pick; typing + Enter on the field itself
+  navigates away; clicking the "My Information" heading hits the progress-bar step link and reloads the step.
+- Custom checkboxes are visually hidden — click the label via JS and verify `is_selected()`. Use real
+  (ActionChains) clicks for Save and Continue; errors appear as "Error-<Field>" buttons.
+- **Resume upload returns HTTP_500 for automated sessions** (every tenant, every file, native and DataTransfer
+  paths). Don't disguise the browser. Hand off instead: automation completes pages 1–2, the candidate attaches the
+  resume and finishes pages 3–5 in about two minutes per posting.
+- `sleep`-based schedulers stall through laptop suspend; check elapsed time and relaunch by hand.
+
 ## 5.5 The manual-apply list — for everything automation shouldn't touch
 
 Not every application should be automated, and some must not be. Rather than skipping those,
