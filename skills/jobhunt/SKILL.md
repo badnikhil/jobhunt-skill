@@ -385,6 +385,17 @@ want to watch live.
   resume and finishes pages 3–5 in about two minutes per posting.
 - `sleep`-based schedulers stall through laptop suspend; check elapsed time and relaunch by hand.
 
+### Platform gotcha: Instahyre (India, matched one-click applies)
+
+- Plain email signup (no captcha). Onboarding is four steps and **nothing inside a step persists until Next
+  succeeds** — fill each step in one pass. Radios: click the `<label>`. Role: Angular `ui-dropdown` (click
+  `.dropdown-select`, then `div.option`). Selectize fields: click the `.selectize-control` container, type into
+  the active element, then Enter (free text allowed for locations/university; degree only from its list —
+  ArrowDown+Enter). Suggested-skill "+" chips shift under you — verify the "Selected Skills" list afterwards.
+- After onboarding it recommends matched jobs immediately (a dozen on day one, refreshed daily). "View job »"
+  opens an in-page modal; dismiss the WhatsApp opt-in ("Not now"), click Apply; the footer then reads
+  "Applied on <date>". Applied cards vanish from the list, so iterate on "first card not yet handled".
+
 ## 5.5 The manual-apply list — for everything automation shouldn't touch
 
 Not every application should be automated, and some must not be. Rather than skipping those,
