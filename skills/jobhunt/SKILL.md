@@ -402,6 +402,23 @@ want to watch live.
   opens an in-page modal; dismiss the WhatsApp opt-in ("Not now"), click Apply; the footer then reads
   "Applied on <date>". Applied cards vanish from the list, so iterate on "first card not yet handled".
 
+### Operating many appliers on one browser profile
+
+- One profile = one browser at a time. Guard it with a file lock, but **acquire the lock after the browser starts
+  (or release it on launch failure)**: a daemon that crashes while holding it silently starves every other
+  applier — every send "errors", every batch waits, and it looks like the sites are broken. `fuser <lockfile>`
+  tells you who holds it.
+- A mailer's per-send hard timeout must include lock-wait time, or waits behind batches count as failed sends
+  and burn the daily budget.
+- Run appliers as sequential background chains with long timeouts; never pipe a long-running applier through
+  `cut`/`grep` and expect live output (block-buffered until exit) — read its per-job ledger instead.
+- Never kill browser processes by pattern-matching a command line that also matches your own shell.
+- Manatal (`careers-page.com`): Full Name / Email / Phone / Cover Letter / Resume / salary / terms; the terms
+  checkbox needs a JS click + `is_selected()`; the submit button is `#submit-id-submit` ("Apply") on most tenants.
+- Company-name → board-slug probing (`boards-api.greenhouse.io/v1/boards/<slug>/jobs`,
+  `api.ashbyhq.com/posting-api/job-board/<slug>`) over every company you've seen anywhere is a cheap way to find
+  auto-able forms nobody listed.
+
 ## 5.5 The manual-apply list — for everything automation shouldn't touch
 
 Not every application should be automated, and some must not be. Rather than skipping those,
